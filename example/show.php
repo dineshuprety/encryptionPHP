@@ -1,6 +1,6 @@
 <?php
 include 'init.php';
-
+include '../src/Encryptionphp.php';
 /**
  * Database class object
  */
@@ -17,7 +17,7 @@ if($obj->Normal_Query("select * from form order by id desc")){
 	echo "<tr><td>Id</td><td>Name</td><td>Email</td></tr>";
     while($row = $obj->Single_Result()){
         $iv    = $row->iv;
-        // $iv    = $encryption->hextobinery($iv);
+        $iv    = $encryption->hextobinery($iv);
         $id    = $row->id;
         $name  = $encryption->decrypt($row->name, $iv);
         $email =  $encryption->decrypt($row->email, $iv);

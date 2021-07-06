@@ -34,12 +34,20 @@ class Encryptionphp{
         $iv = openssl_random_pseudo_bytes(256/16);
         return $iv;
     }
-
-    public function binerytohex(){
-        $binhex = bin2hex($this->iv());
-        return $binhex;
+    /**
+     * Changeing bineryIv value into hex to store in database
+     * @param string $convert
+     * @return string
+     */
+    public function binerytohex($convert){
+        return bin2hex($convert);
+        
     }
-
+    /**
+     * Changeing hexIv value into binery to retrive encrypted data to decrypted from
+     * @param string $convert
+     * @return string
+     */
     public function hextobinery($convert){
         return hex2bin($convert); 
     }
@@ -47,26 +55,25 @@ class Encryptionphp{
 	 * Encrypt a string.
 	 *
 	 * @param string $content
-	 *
+	 * @param string $iv
 	 * @return string
 	 */
-    public function encrypt($content)
-    {
-        
-        $iv = $this->iv();
+    public function encrypt($content, $iv)
+    { 
+        // $iv = $this->iv();
         return openssl_encrypt($content, self::chiper, $this->key, self::options, $iv);
 
     }
     /**
 	 * Decrypt an encrypted string.
 	 *
-	 * @param string $content
-	 *
+	 * @param string $chiper_text
+	 * @param string $iv
 	 * @return string
 	 */
     public function decrypt($chiper_text, $iv)
     {
-        $iv = $this->hextobinery($iv);
+        // $iv = $this->hextobinery($iv);
         return openssl_decrypt($chiper_text, self::chiper, $this->key, self::options, $iv);
     }
 }

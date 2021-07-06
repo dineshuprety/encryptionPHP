@@ -6,7 +6,7 @@ session_regenerate_id();
 ob_start();//truns on output buffering
 
     spl_autoload_register(function($class_name){
-      include "src/$class_name.php";
+      include "classes/$class_name.php";
     })
 
 ?>
