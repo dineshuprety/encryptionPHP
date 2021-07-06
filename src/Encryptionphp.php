@@ -40,13 +40,13 @@ class Encryptionphp{
         return $binhex;
     }
 
-    public function hextobinery(){
-
+    public function hextobinery($convert){
+        return hex2bin($convert); 
     }
     /**
 	 * Encrypt a string.
 	 *
-	 * @param string $text
+	 * @param string $content
 	 *
 	 * @return string
 	 */
@@ -54,18 +54,19 @@ class Encryptionphp{
     {
         
         $iv = $this->iv();
-        return openssl_encrypt($content, self::chiper, $this->key, self::options, $iv, $tag);
+        return openssl_encrypt($content, self::chiper, $this->key, self::options, $iv);
 
     }
     /**
 	 * Decrypt an encrypted string.
 	 *
-	 * @param string $chiper
+	 * @param string $content
 	 *
 	 * @return string
 	 */
-    public  function decrypt($chiper)
+    public function decrypt($chiper_text, $iv)
     {
-        
+        $iv = $this->hextobinery($iv);
+        return openssl_decrypt($chiper_text, self::chiper, $this->key, self::options, $iv);
     }
 }
